@@ -1,6 +1,8 @@
 import { Component } from "react";
 import { Col } from "react-bootstrap";
-class SingleMovie extends Component {
+import "./all-movies.css";
+
+class AllMovies extends Component {
   state = {
     moviesData: [],
   };
@@ -8,7 +10,7 @@ class SingleMovie extends Component {
   fetchMovies = async () => {
     try {
       let response = await fetch(
-        `http://www.omdbapi.com/?apikey=[API-KEY-HERE]harry%20potter`,
+        `http://www.omdbapi.com/?apikey=cfdd44f2&s=harry%20potter`,
         {
           method: "GET",
         }
@@ -37,9 +39,16 @@ class SingleMovie extends Component {
     return this.state.moviesData.map((movies) => {
       //   console.log(movies.Title);
       return (
-        <Col key={movies.imdbID}>
+        <Col
+          xs={12}
+          sm={6}
+          md={4}
+          lg={2}
+          key={movies.imdbID}
+          className="movies-container p-0 no-wrap"
+        >
           <img
-            className="movies-cover"
+            className="d-block w-100"
             src={movies.Poster}
             alt={movies.Title}
           />
@@ -48,7 +57,7 @@ class SingleMovie extends Component {
     });
   }
 }
-export default SingleMovie;
+export default AllMovies;
 
 // render() {
 //     console.log("I am render");
