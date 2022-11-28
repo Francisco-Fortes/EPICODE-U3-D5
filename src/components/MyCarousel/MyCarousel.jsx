@@ -1,18 +1,36 @@
-import { Carousel, Row, Col } from "react-bootstrap";
+import { Component } from "react";
+import { Carousel, Row, Col, Container } from "react-bootstrap";
+import "./my-carousel.css";
 import AllMovies from "../AllMovies/AllMovies";
 
-const MyCarousel = () => {
-  return (
-    <Carousel>
-      <Carousel.Item>
-        <Row>
-          <Col>
-            <AllMovies />
-          </Col>
-        </Row>
-      </Carousel.Item>
-    </Carousel>
-  );
-};
-
+class MyCarousel extends Component {
+  state = {
+    moviesData: [],
+    saga: this.props.nameSaga,
+  };
+  render() {
+    return (
+      <>
+        <h4 className="ml-4 mt-3">Most popular of {this.state.saga}</h4>
+        <Carousel className="main-bg mt- mx-5">
+          <Carousel.Item interval={30000}>
+            <Row className="justify-content-center mt-2">
+              <AllMovies nameSaga={this.state.saga} />
+            </Row>
+          </Carousel.Item>
+          <Carousel.Item interval={30000}>
+            <Row className="justify-content-center mt-2">
+              <AllMovies nameSaga={this.state.saga} />
+            </Row>
+          </Carousel.Item>
+          <Carousel.Item interval={30000}>
+            <Row className="justify-content-center mt-2">
+              <AllMovies nameSaga={this.state.saga} />
+            </Row>
+          </Carousel.Item>
+        </Carousel>
+      </>
+    );
+  }
+}
 export default MyCarousel;

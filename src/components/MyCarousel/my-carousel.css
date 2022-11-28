@@ -1,0 +1,15 @@
+h4 {
+  color: #bfbfbf;
+}
+
+.carousel-indicators {
+  visibility: hidden;
+}
+
+.carousel-control-next {
+  margin-right: -155px;
+}
+
+.carousel-control-prev {
+  margin-left: -155px;
+}

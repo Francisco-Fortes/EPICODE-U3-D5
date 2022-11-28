@@ -5,12 +5,13 @@ import "./all-movies.css";
 class AllMovies extends Component {
   state = {
     moviesData: [],
+    saga: this.props.nameSaga,
   };
 
   fetchMovies = async () => {
     try {
       let response = await fetch(
-        `http://www.omdbapi.com/?apikey=cfdd44f2&s=harry%20potter`,
+        "http://www.omdbapi.com/?apikey=cfdd44f2&s=" + this.state.saga,
         {
           method: "GET",
         }
@@ -39,16 +40,9 @@ class AllMovies extends Component {
     return this.state.moviesData.map((movies) => {
       //   console.log(movies.Title);
       return (
-        <Col
-          xs={12}
-          sm={6}
-          md={4}
-          lg={2}
-          key={movies.imdbID}
-          className="movies-container p-0 no-wrap"
-        >
+        <Col key={movies.imdbID} className="m-0">
           <img
-            className="d-block w-100"
+            className="d-block w-100 px-1 movies"
             src={movies.Poster}
             alt={movies.Title}
           />
@@ -58,15 +52,3 @@ class AllMovies extends Component {
   }
 }
 export default AllMovies;
-
-// render() {
-//     console.log("I am render");
-//     return this.state.moviesData.map((movies) => {
-//       console.log(movies);
-//       return (
-//         <Card key={movies.imdbID} style={{ width: "18rem" }}>
-//           <Card.Img variant="top" src={movies.poster} alt={movies.title} />
-//         </Card>
-//       );
-//     });
-//   }
