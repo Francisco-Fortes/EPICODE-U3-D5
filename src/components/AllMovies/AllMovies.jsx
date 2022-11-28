@@ -1,11 +1,13 @@
 import { Component } from "react";
-import { Col } from "react-bootstrap";
+import { Col, Spinner, Alert } from "react-bootstrap";
 import "./all-movies.css";
 
 class AllMovies extends Component {
   state = {
     moviesData: [],
     saga: this.props.nameSaga,
+    isLoading: true,
+    isError: false,
   };
 
   fetchMovies = async () => {
@@ -20,13 +22,22 @@ class AllMovies extends Component {
         let data = await response.json();
         this.setState({
           moviesData: data.Search,
+          isLoading: false,
         });
         // console.log(data.Search);
       } else {
-        console.log("error while fetching");
+        console.log("There was an error while fetching the data");
+        this.setState({
+          isLoading: false,
+          isError: true,
+        });
       }
     } catch (error) {
       console.log(error);
+      this.setState({
+        isLoading: false,
+        isError: true,
+      });
     }
   };
 
@@ -38,6 +49,14 @@ class AllMovies extends Component {
   render() {
     // console.log("I am render");
     return this.state.moviesData.map((movies) => {
+      <>
+        {this.state.isLoading && (
+          <Spinner animation="border" role="status" variant="danger"></Spinner>
+        )}
+        {this.state.isError && (
+          <Alert variant="danger">Something went wrong</Alert>
+        )}
+      </>;
       //   console.log(movies.Title);
       return (
         <Col key={movies.imdbID} className="m-0">
