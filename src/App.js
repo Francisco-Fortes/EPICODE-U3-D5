@@ -1,14 +1,17 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import MyNavbar from "./components/MyNavbar/MyNavbar.jsx";
-// import MyFooter from "./components/MyFooter/MyFooter.jsx";
-import MyCarousel from "./components/MyCarousel/MyCarousel.jsx";
+import MyNavbar from "./components/MyNavbar/MyNavbar";
+// import CustomFooter from "./components/CustomFooter/CustomFooter";
+import MyCarousel from "./components/MyCarousel/MyCarousel";
+// import MyFooter from "./components/MyFooter/MyFooter";
 function App() {
   return (
-    <div className="App">
+    <div>
       <MyNavbar />
-      <MyCarousel />
-      {/* <AllMovies /> */}
+      <MyCarousel nameSaga="Star Wars" />
+      <MyCarousel nameSaga="BattleStar Galactica" />
+      <MyCarousel nameSaga="Lord of the Rings" />
+      {/* <CustomFooter /> */}
       {/* <MyFooter /> */}
     </div>
   );

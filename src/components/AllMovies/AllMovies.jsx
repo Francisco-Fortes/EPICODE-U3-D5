@@ -1,14 +1,19 @@
 import { Component } from "react";
-import { Col } from "react-bootstrap";
-class SingleMovie extends Component {
+import { Col, Spinner, Alert } from "react-bootstrap";
+import "./all-movies.css";
+
+class AllMovies extends Component {
   state = {
     moviesData: [],
+    saga: this.props.nameSaga,
+    isLoading: true,
+    isError: false,
   };
 
   fetchMovies = async () => {
     try {
       let response = await fetch(
-        `http://www.omdbapi.com/?apikey=[API-KEY-HERE]harry%20potter`,
+        "http://www.omdbapi.com/?apikey=cfdd44f2&s=" + this.state.saga,
         {
           method: "GET",
         }
@@ -17,13 +22,22 @@ class SingleMovie extends Component {
         let data = await response.json();
         this.setState({
           moviesData: data.Search,
+          isLoading: false,
         });
         // console.log(data.Search);
       } else {
-        console.log("error while fetching");
+        console.log("There was an error while fetching the data");
+        this.setState({
+          isLoading: false,
+          isError: true,
+        });
       }
     } catch (error) {
       console.log(error);
+      this.setState({
+        isLoading: false,
+        isError: true,
+      });
     }
   };
 
@@ -35,11 +49,19 @@ class SingleMovie extends Component {
   render() {
     // console.log("I am render");
     return this.state.moviesData.map((movies) => {
+      <>
+        {this.state.isLoading && (
+          <Spinner animation="border" role="status" variant="danger"></Spinner>
+        )}
+        {this.state.isError && (
+          <Alert variant="danger">Something went wrong</Alert>
+        )}
+      </>;
       //   console.log(movies.Title);
       return (
-        <Col key={movies.imdbID}>
+        <Col key={movies.imdbID} className="m-0">
           <img
-            className="movies-cover"
+            className="d-block w-100 px-1 movies"
             src={movies.Poster}
             alt={movies.Title}
           />
@@ -48,16 +70,4 @@ class SingleMovie extends Component {
     });
   }
 }
-export default SingleMovie;
-
-// render() {
-//     console.log("I am render");
-//     return this.state.moviesData.map((movies) => {
-//       console.log(movies);
-//       return (
-//         <Card key={movies.imdbID} style={{ width: "18rem" }}>
-//           <Card.Img variant="top" src={movies.poster} alt={movies.title} />
-//         </Card>
-//       );
-//     });
-//   }
+export default AllMovies;
